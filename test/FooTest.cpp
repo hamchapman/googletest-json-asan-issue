@@ -18,9 +18,14 @@ TEST_F(FooTests, Foo4) {}
 TEST_F(FooTests, Foo) {
   ASSERT_EQ(foobar::add(1, 2), 3);
 
-  json ints = json{1, 2, 3};
+  // Everything is fine if you use a vector of doubles.
+  json doubles_json = {1.1, 2.2, 3.3};
+  std::vector<double> fetched_doubles = doubles_json.get<std::vector<double>>();
 
-  // Or, if you uncomment the line below then the buffer overflow also won't
-  // occur
-  std::vector<int> ints_vec = ints.get<std::vector<int>>();
+  // But you get the heap buffer overflow when using a vector of ints
+  json ints_json = {1, 2, 3};
+
+  // If you uncomment the line below then the buffer overflow also won't occur
+  std::vector<int> fetched_ints = ints_json.get<std::vector<int>>();
+
 }

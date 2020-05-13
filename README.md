@@ -161,6 +161,8 @@ As written out in comments in the [`Footest.cpp` file](https://github.com/hamcha
 3. Comment out the line in the tests that tries to get the json value as a
    vector of `int`s.
 
+You can see in [`Footest.cpp`](https://github.com/hamchapman/googletest-json-asan-issue/blob/master/test/FooTest.cpp) that using nlohmann/json with a vector of `double`s is fine. It's only when a vector of `int`s are used that the heap buffer overflow occurs.
+
 ## Related issues?
 
 The only thing I could find that seems at all similar is this issue: https://github.com/google/googletest/issues/487
