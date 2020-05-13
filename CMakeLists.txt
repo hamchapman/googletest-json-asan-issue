@@ -7,6 +7,19 @@ include_directories(include)
 file(GLOB SOURCES "src/*.cpp" "include/*.hpp")
 add_library(FooBug STATIC ${SOURCES})
 
+include(FetchContent)
+
+FetchContent_Declare(json
+  GIT_REPOSITORY https://github.com/ArthurSonzogni/nlohmann_json_cmake_fetchcontent
+  GIT_TAG v3.7.3)
+
+FetchContent_GetProperties(json)
+if(NOT json_POPULATED)
+  FetchContent_Populate(json)
+  add_subdirectory(${json_SOURCE_DIR} ${json_BINARY_DIR} EXCLUDE_FROM_ALL)
+endif()
+
+# Tests
 #
 # Google Test
 #
@@ -33,20 +46,21 @@ add_subdirectory(${CMAKE_CURRENT_BINARY_DIR}/googletest-src
                  EXCLUDE_FROM_ALL)
 
 file(GLOB TESTS "test/*.cpp")
-
-# Tests
 include(GoogleTest)
 add_executable(tests ${TESTS})
 
 # Enable ASAN
-target_compile_options(FooBug PRIVATE -fno-omit-frame-pointer -fsanitize=address)
-target_link_options(FooBug PRIVATE -fno-omit-frame-pointer -fsanitize=address)
-target_compile_options(tests PRIVATE -fno-omit-frame-pointer -fsanitize=address)
-target_link_options(tests PRIVATE -fno-omit-frame-pointer -fsanitize=address)
+target_compile_options(FooBug PRIVATE -fsanitize=address)
+
+# If you comment out the line below then the buffer overflow will not occur
+target_compile_options(tests PRIVATE -fsanitize=address)
+
+target_link_options(tests PRIVATE -fsanitize=address)
 
 target_link_libraries(tests
   gtest_main
   FooBug
+  nlohmann_json::nlohmann_json
 )
 
 target_include_directories(tests PUBLIC build/googletest-src/googletest/include)

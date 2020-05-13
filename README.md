@@ -2,9 +2,14 @@
 
 ## Overview
 
+The project uses CMake to build a library, `FooBug`, and a `tests` exectuable,
+which is what is making use of googletest.
+
 There appears to be an issue with googletest and an interaction with:
 
 * defining at least 5 tests
+* compiling the `tests` executable, which links `gtest_main` with the following
+  ASAN-related flag: `-fsanitize=address`
 * making use of [nlohmann/json](https://github.com/nlohmann/json), specifically
   creating a `nlohmann::json` object and then trying to extract the value using
   the `get<std::vector<int>>()` syntax, for example:

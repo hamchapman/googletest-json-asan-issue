@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
+#include <nlohmann/json.hpp>
 #include "../include/foobar.hpp"
-#include "../include/json.hpp"
 
 #include <vector>
 
