@@ -19,7 +19,7 @@ There appears to be an issue with googletest and an interaction with:
   std::vector<int> ints_vec = ints.get<std::vector<int>>();
   ```
 
-This reproduction is setup to [enable the address sanitizer](https://github.com/hamchapman/googletest-json-asan-issue/blob/eb11839d08a29878394c8587b7c0da56f36f8fe1/CMakeLists.txt#L41-L45). If you don't enable ASAN then you'll end up with a runtime segfault instead of the link time error.
+This reproduction is setup to [enable the address sanitizer](https://github.com/hamchapman/googletest-json-asan-issue/blob/43938546ab3c79a05dbc3fe385dadaee625445f2/CMakeLists.txt#L52-L58). If you don't enable ASAN then you'll end up with a runtime segfault instead of the link time error.
 
 ## How to reproduce issue
 
