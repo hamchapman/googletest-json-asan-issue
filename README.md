@@ -2,7 +2,7 @@
 
 ## Overview
 
-The project uses CMake to build a library, `FooBug`, and a `tests` exectuable,
+The project uses CMake to build a library, `FooBug`, and a `tests` executable,
 which is what is making use of googletest.
 
 There appears to be an issue with googletest and an interaction with:
@@ -154,10 +154,11 @@ make: *** [all] Error 2
 
 ## Specifics
 
-As written out in comments in the [`Footest.cpp` file](https://github.com/hamchapman/googletest-json-asan-issue/blob/master/test/FooTest.cpp), you can stop the issue from occurring if you do one of the following:
+As written out in comments in the [`Footest.cpp` file](https://github.com/hamchapman/googletest-json-asan-issue/blob/master/test/FooTest.cpp), you can stop the issue from occurring if you do at least one of the following:
 
-1. Comment out one of the test cases so that only 4 (or fewer) remain in total.
-2. Comment out the line in the tests that tries to get the json value as a
+1. Comment out the line that adds the `-fsanitize=address` compiler flag for the `tests` executable.
+2. Comment out at least one of the test cases so that only 4 (or fewer) remain in total.
+3. Comment out the line in the tests that tries to get the json value as a
    vector of `int`s.
 
 ## Related issues?
