@@ -23,7 +23,16 @@ This reproduction is setup to [enable the address sanitizer](https://github.com/
 
 ## How to reproduce issue
 
-Clone the repo and run the following to reproduce the issue:
+You can do it all with a single command:
+
+```
+git clone https://github.com/hamchapman/googletest-json-asan-issue.git \
+&& cd googletest-json-asan-issue && mkdir -p build && cd build && cmake .. \
+&& make -j8 && ./tests
+```
+
+Or you can clone the repo, `cd` into `googletest-json-asan-issue`, and run the
+following:
 
 ```
 mkdir -p build && cd build && cmake .. && make -j8 && ./tests
