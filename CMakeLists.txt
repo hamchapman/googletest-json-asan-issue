@@ -7,21 +7,7 @@ include_directories(include)
 file(GLOB SOURCES "src/*.cpp" "include/*.hpp")
 add_library(FooBug STATIC ${SOURCES})
 
-include(FetchContent)
-
-FetchContent_Declare(json
-  GIT_REPOSITORY https://github.com/ArthurSonzogni/nlohmann_json_cmake_fetchcontent
-  GIT_TAG v3.7.3)
-
-FetchContent_GetProperties(json)
-if(NOT json_POPULATED)
-  FetchContent_Populate(json)
-  add_subdirectory(${json_SOURCE_DIR} ${json_BINARY_DIR} EXCLUDE_FROM_ALL)
-endif()
-
 # Tests
-#
-# Google Test
 #
 configure_file(DownloadGoogleTest.txt.in googletest-download/CMakeLists.txt)
 execute_process(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" .
@@ -54,13 +40,11 @@ target_compile_options(FooBug PRIVATE -fsanitize=address)
 
 # If you comment out the line below then the buffer overflow will not occur
 target_compile_options(tests PRIVATE -fsanitize=address)
-
 target_link_options(tests PRIVATE -fsanitize=address)
 
 target_link_libraries(tests
   gtest_main
   FooBug
-  nlohmann_json::nlohmann_json
 )
 
 target_include_directories(tests PUBLIC build/googletest-src/googletest/include)
